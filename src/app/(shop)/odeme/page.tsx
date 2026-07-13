@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Lock } from "lucide-react";
+import { CheckCircle, Lock, Tag } from "lucide-react";
 
 const cities = [
   "Adana", "Ankara", "Antalya", "Bursa", "Diyarbakır", "Eskişehir",
@@ -17,8 +17,16 @@ export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCartStore();
   const router = useRouter();
   const total = totalPrice();
-  const shipping = total >= 500 ? 0 : 49.90;
-  const grandTotal = total + shipping;
+
+  const [discountRate, setDiscountRate] = useState(0);
+  useEffect(() => {
+    fetch("/api/user/me").then((r) => r.json()).then((d) => setDiscountRate(d.discountRate ?? 0));
+  }, []);
+
+  const discountAmount = discountRate > 0 ? parseFloat((total * discountRate / 100).toFixed(2)) : 0;
+  const discountedTotal = total - discountAmount;
+  const shipping = discountedTotal >= 500 ? 0 : 49.90;
+  const grandTotal = discountedTotal + shipping;
 
   const [step, setStep] = useState<"address" | "payment" | "success">("address");
   const [loading, setLoading] = useState(false);
@@ -412,6 +420,20 @@ export default function CheckoutPage() {
               </div>
               <hr />
               <div className="mt-3 space-y-2 text-sm">
+                {discountRate > 0 && (
+                  <>
+                    <div className="flex justify-between text-gray-500">
+                      <span>Ürünler Toplamı</span>
+                      <span>{formatPrice(total)}</span>
+                    </div>
+                    <div className="flex justify-between text-green-600 font-medium">
+                      <span className="flex items-center gap-1">
+                        <Tag size={13} /> Özel İndirim (%{discountRate})
+                      </span>
+                      <span>-{formatPrice(discountAmount)}</span>
+                    </div>
+                  </>
+                )}
                 <div className="flex justify-between text-gray-600">
                   <span>Kargo</span>
                   <span className={shipping === 0 ? "text-green-600" : ""}>
