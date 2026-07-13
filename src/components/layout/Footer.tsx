@@ -143,7 +143,7 @@ export default function Footer() {
       <div className="border-t border-gray-800 bg-gray-950">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-            <p>© 2024 Hempa Tedarik. Tüm hakları saklıdır.</p>
+            <p>© 2026 Hempa Tedarik. Tüm hakları saklıdır.</p>
             <div className="flex gap-4">
               <Link href="/gizlilik-politikasi" className="hover:text-orange-400 transition-colors">
                 Gizlilik Politikası

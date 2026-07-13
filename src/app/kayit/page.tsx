@@ -149,7 +149,7 @@ export default function RegisterPage() {
 
           <p className="text-xs text-gray-500">
             Kayıt olarak{" "}
-            <Link href="/gizlilik" className="text-orange-500 hover:underline">Gizlilik Politikası</Link>'nı ve{" "}
+            <Link href="/gizlilik-politikasi" className="text-orange-500 hover:underline">Gizlilik Politikası</Link>'nı ve{" "}
             <Link href="/kullanim-sartlari" className="text-orange-500 hover:underline">Kullanım Şartları</Link>'nı
             kabul etmiş olursunuz.
           </p>
