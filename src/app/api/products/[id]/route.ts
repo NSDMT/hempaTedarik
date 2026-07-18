@@ -41,7 +41,7 @@ export async function PUT(
 
     const { id } = await params;
     const body = await request.json();
-    const { name, description, price, comparePrice, sku, stock, images, categoryId, isActive, isFeatured } = body;
+    const { name, description, price, comparePrice, sku, stock, images, categoryId, isActive, isFeatured, vatRate, purchaseVatRate } = body;
 
     const product = await prisma.product.update({
       where: { id },
@@ -56,6 +56,8 @@ export async function PUT(
         ...(categoryId && { categoryId }),
         ...(isActive !== undefined && { isActive }),
         ...(isFeatured !== undefined && { isFeatured }),
+        ...(vatRate !== undefined && { vatRate: parseFloat(vatRate) }),
+        ...(purchaseVatRate !== undefined && { purchaseVatRate: parseFloat(purchaseVatRate) }),
       },
       include: { category: true },
     });

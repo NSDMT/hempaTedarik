@@ -15,13 +15,13 @@ export async function GET(request: NextRequest) {
 
   const where = q
     ? {
-        role: "USER" as const,
-        OR: [
-          { name: { contains: q, mode: "insensitive" as const } },
-          { email: { contains: q, mode: "insensitive" as const } },
-          { phone: { contains: q } },
-        ],
-      }
+      role: "USER" as const,
+      OR: [
+        { name: { contains: q, mode: "insensitive" as const } },
+        { email: { contains: q, mode: "insensitive" as const } },
+        { phone: { contains: q } },
+      ],
+    }
     : { role: "USER" };
 
   const [users, total] = await Promise.all([

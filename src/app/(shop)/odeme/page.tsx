@@ -140,18 +140,18 @@ export default function CheckoutPage() {
             <div key={s.key} className="flex items-center gap-2">
               <div
                 className={`flex items-center gap-2 ${step === s.key
-                    ? "text-orange-500 font-semibold"
-                    : step === "payment" && s.key === "address"
-                      ? "text-green-500"
-                      : "text-gray-400"
+                  ? "text-orange-500 font-semibold"
+                  : step === "payment" && s.key === "address"
+                    ? "text-green-500"
+                    : "text-gray-400"
                   }`}
               >
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step === s.key
-                      ? "bg-orange-500 text-white"
-                      : step === "payment" && s.key === "address"
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-200 text-gray-500"
+                    ? "bg-orange-500 text-white"
+                    : step === "payment" && s.key === "address"
+                      ? "bg-green-500 text-white"
+                      : "bg-gray-200 text-gray-500"
                     }`}
                 >
                   {step === "payment" && s.key === "address" ? "✓" : s.num}
@@ -366,8 +366,8 @@ export default function CheckoutPage() {
                           type="button"
                           onClick={() => setPayment({ ...payment, installment: inst })}
                           className={`py-2 rounded-lg text-sm font-medium border transition-all ${payment.installment === inst
-                              ? "border-orange-500 bg-orange-50 text-orange-600"
-                              : "border-gray-200 text-gray-600 hover:border-gray-300"
+                            ? "border-orange-500 bg-orange-50 text-orange-600"
+                            : "border-gray-200 text-gray-600 hover:border-gray-300"
                             }`}
                         >
                           {inst === "1" ? "Tek Çekim" : `${inst} Taksit`}

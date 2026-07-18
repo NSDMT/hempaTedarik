@@ -14,8 +14,9 @@
 4. [Kategori Yönetimi](#4-kategori-yönetimi)
 5. [Banner / Slider Yönetimi](#5-banner--slider-yönetimi)
 6. [Sipariş Yönetimi](#6-sipariş-yönetimi)
-7. [Müşteri Deneyimi — Alışveriş Akışı](#7-müşteri-deneyimi--alışveriş-akışı)
-8. [Sık Sorulan Sorular](#8-sık-sorulan-sorular)
+7. [Müşteri Yönetimi ve Özel İndirim](#7-müşteri-yönetimi-ve-özel-i̇ndirim)
+8. [Müşteri Deneyimi — Alışveriş Akışı](#8-müşteri-deneyimi--alışveriş-akışı)
+9. [Sık Sorulan Sorular](#9-sık-sorulan-sorular)
 
 ## 1. Giriş Yapma
 
@@ -33,7 +34,7 @@ ya da doğrudan https://hempatedarik.com/admin adresine gidin.
 
 ## 2. Admin Panel Genel Bakış
 
-Sol kenar çubuğunda 4 bölüm bulunur:
+Sol kenar çubuğunda şu bölümler bulunur:
 
 | Menü | Açıklama |
 |---|---|
@@ -42,6 +43,7 @@ Sol kenar çubuğunda 4 bölüm bulunur:
 | 🗂️ **Kategoriler** | Kategori ağacı yönetimi |
 | 🖼️ **Bannerlar** | Ana sayfa slider ve promo bantları |
 | 🛒 **Siparişler** | Sipariş takibi ve durum güncelleme |
+| 👥 **Müşteriler** | Kayıtlı müşteriler ve özel indirim tanımlama |
 
 ---
 
@@ -217,7 +219,57 @@ Sayfada şu bilgiler görünür:
 
 ---
 
-## 7. Müşteri Deneyimi — Alışveriş Akışı
+## 7. Müşteri Yönetimi ve Özel İndirim
+
+**Adres:** https://hempatedarik.com/admin/musteriler
+
+### 7.1 Müşteri Listesi
+
+Sayfada kayıtlı tüm müşteriler görüntülenir:
+
+| Sütun | Açıklama |
+|---|---|
+| **Müşteri** | Ad, soyad ve e-posta adresi |
+| **Telefon** | Kayıtlı telefon numarası |
+| **Sipariş** | Toplam sipariş sayısı |
+| **Toplam Harcama** | Müşterinin tüm siparişlerinin toplamı |
+| **İndirim** | Tanımlı özel indirim oranı (yoksa —) |
+| **Kayıt Tarihi** | Üyelik tarihi |
+
+Arama kutusuna **ad, e-posta veya telefon** yazarak müşteri filtrelenebilir.
+
+---
+
+### 7.2 Müşteriye Özel İndirim Tanımlama
+
+1. Müşteri satırındaki **🏷️ İndirim** butonuna tıklayın.
+2. Açılan pencerede indirim oranını girin:
+   - Hızlı seçim: **%5 / %10 / %15 / %20 / %25** butonlarından birine tıklayın.
+   - Elle giriş: istediğiniz sayıyı yazın (0–100 arası).
+   - İndirimi kaldırmak için **"Kaldır"** butonuna tıklayın (0 yapar).
+3. İsteğe bağlı olarak **Notlar** alanına açıklama girin (örn: "VIP müşteri", "Kurumsal anlaşma").
+4. **"Kaydet"** butonuna tıklayın.
+
+> **Not:** İndirim atanan müşteri siteye giriş yapıp ödeme sayfasına geçtiğinde  
+> sepet tutarından indirim otomatik düşülür. Giriş yapılmadan (misafir) alışverişte uygulanmaz.
+
+---
+
+### 7.3 Ödeme Sayfasında İndirim Görünümü
+
+Müşteri, kendisine indirim tanımlıysa ödeme sayfasında şu şekilde görür:
+
+```
+Ürünler Toplamı:          ₺500,00
+🏷️ Özel İndirim (%10):   -₺50,00
+Kargo:                    Ücretsiz
+─────────────────────────────────
+Toplam:                   ₺450,00
+```
+
+---
+
+## 8. Müşteri Deneyimi — Alışveriş Akışı
 
 Müşterinizin sitede izlediği yol:
 
@@ -255,7 +307,7 @@ Ana Sayfa → Kategori / Ürün Listesi → Ürün Detay
 
 ---
 
-## 8. Sık Sorulan Sorular
+## 9. Sık Sorulan Sorular
 
 **S: Yeni bir ürün eklediğimde neden fotoğraf çıkmıyor?**  
 C: Fotoğraf URL'i girilmemiş olabilir. Admin panelinde ürünü düzenleyip URL ekleyin  
@@ -274,6 +326,12 @@ Para iadesi için ayrıca İyzico panelinize (merchant.iyzipay.com) girip ilgili
 
 **S: Stok bitince ne olur?**  
 C: Ürün kartında "Stokta Yok" yazar, sepete eklenemez. Stoku güncellediğinizde otomatik açılır.
+
+**S: Müşteriye indirim tanımladım ama ödeme sayfasında görünmüyor.**  
+C: Müşterinin siteye **giriş yapmış** olması gerekir. Giriş yapılmadan (misafir) alışveriş yapıldığında indirim uygulanmaz. Müşteriye hesabıyla giriş yapmasını söyleyin.
+
+**S: Aynı müşterinin indirimini daha sonra değiştirebilir miyim?**  
+C: Evet. Admin paneli → Müşteriler → Müşteri satırındaki İndirim butonu → Yeni oranı girin → Kaydet. Değişiklik anında aktif olur.
 
 **S: Site açılmıyor, ne yapmalıyım?**  
 C: Geliştiricinizle iletişime geçin. Sunucu ya da uygulama kaynaklı teknik bir sorun olabilir.

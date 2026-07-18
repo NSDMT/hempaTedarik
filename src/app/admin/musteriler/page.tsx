@@ -234,11 +234,10 @@ export default function AdminCustomersPage() {
                     <button
                       key={v}
                       onClick={() => setDiscountInput(String(v))}
-                      className={`text-xs px-3 py-1 rounded-full border transition-colors ${
-                        discountInput === String(v)
+                      className={`text-xs px-3 py-1 rounded-full border transition-colors ${discountInput === String(v)
                           ? "bg-orange-500 text-white border-orange-500"
                           : "border-gray-200 text-gray-600 hover:border-orange-300"
-                      }`}
+                        }`}
                     >
                       %{v}
                     </button>

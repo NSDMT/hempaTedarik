@@ -18,6 +18,8 @@ interface Product {
   categoryId: string;
   isActive: boolean;
   isFeatured: boolean;
+  vatRate: number;
+  purchaseVatRate: number;
   category: { name: string };
   images: string[];
 }
@@ -49,6 +51,8 @@ export default function AdminProductsPage() {
     categoryId: "",
     isActive: true,
     isFeatured: false,
+    vatRate: "20",
+    purchaseVatRate: "20",
     images: [] as string[],
   });
 
@@ -92,11 +96,13 @@ export default function AdminProductsPage() {
         categoryId: product.categoryId || "",
         isActive: product.isActive,
         isFeatured: product.isFeatured,
+        vatRate: (product.vatRate ?? 20).toString(),
+        purchaseVatRate: (product.purchaseVatRate ?? 20).toString(),
         images: Array.isArray(product.images) ? product.images : [],
       });
     } else {
       setEditingProduct(null);
-      setForm({ name: "", description: "", price: "", comparePrice: "", sku: "", stock: "0", categoryId: "", isActive: true, isFeatured: false, images: [] });
+      setForm({ name: "", description: "", price: "", comparePrice: "", sku: "", stock: "0", categoryId: "", isActive: true, isFeatured: false, vatRate: "20", purchaseVatRate: "20", images: [] });
     }
     setImageUrlInput("");
     setIsModalOpen(true);
@@ -394,6 +400,30 @@ export default function AdminProductsPage() {
                     onChange={(e) => setForm({ ...form, stock: e.target.value })}
                     className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-orange-400"
                     placeholder="0"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">Satış KDV (%)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={form.vatRate}
+                    onChange={(e) => setForm({ ...form, vatRate: e.target.value })}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-orange-400"
+                    placeholder="20"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">Alış KDV (%)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={form.purchaseVatRate}
+                    onChange={(e) => setForm({ ...form, purchaseVatRate: e.target.value })}
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-orange-400"
+                    placeholder="20"
                   />
                 </div>
               </div>

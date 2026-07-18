@@ -73,9 +73,9 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { name, description, price, comparePrice, sku, stock, images, categoryId, isActive, isFeatured } = body;
+    const { name, description, price, comparePrice, sku, stock, images, categoryId, isActive, isFeatured, vatRate, purchaseVatRate } = body;
 
-    if (!name || !price || !categoryId) {
+    if (!name || price === undefined || price === null || price === "" || !categoryId) {
       return NextResponse.json(
         { error: "Ad, fiyat ve kategori zorunludur" },
         { status: 400 }
@@ -97,6 +97,8 @@ export async function POST(request: NextRequest) {
         categoryId,
         isActive: isActive !== false,
         isFeatured: isFeatured === true,
+        vatRate: vatRate !== undefined ? parseFloat(vatRate) : 20,
+        purchaseVatRate: purchaseVatRate !== undefined ? parseFloat(purchaseVatRate) : 20,
       },
       include: { category: true },
     });

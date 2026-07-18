@@ -49,6 +49,8 @@ model Product {
   sku          String?  @unique
   stock        Int      @default(0)
   images       String   @default("[]")
+  vatRate      Float    @default(20)
+  purchaseVatRate Float @default(20)
   categoryId   String
   category     Category @relation(fields: [categoryId], references: [id])
   isActive     Boolean  @default(true)
