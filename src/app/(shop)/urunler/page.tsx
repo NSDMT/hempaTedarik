@@ -99,10 +99,10 @@ async function ProductsContent({
             <p className="text-sm text-gray-500 mt-1">{total} ürün bulundu</p>
           </div>
           <div className="flex items-center gap-3">
-              <Suspense fallback={null}>
-                <SortSelect value={sort} options={sortOptions} />
-              </Suspense>
-            </div>
+            <Suspense fallback={null}>
+              <SortSelect value={sort} options={sortOptions} />
+            </Suspense>
+          </div>
         </div>
 
         <div className="flex gap-6">
@@ -123,8 +123,8 @@ async function ProductsContent({
                     key={cat.id}
                     href={`/urunler?kategori=${cat.slug}`}
                     className={`block text-sm px-3 py-2 rounded-lg transition-colors ${selectedCategorySlug === cat.slug
-                        ? "bg-orange-50 text-orange-600 font-semibold"
-                        : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-orange-50 text-orange-600 font-semibold"
+                      : "text-gray-600 hover:bg-gray-50"
                       }`}
                   >
                     {cat.name}

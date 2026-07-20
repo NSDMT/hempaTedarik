@@ -106,8 +106,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                   <Link
                     href={`/kategori/${cat.slug}`}
                     className={`block px-3 py-2 rounded-lg text-sm transition-colors ${cat.id === category.id
-                        ? "bg-orange-50 text-orange-600 font-semibold"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      ? "bg-orange-50 text-orange-600 font-semibold"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                       }`}
                   >
                     {cat.name}
@@ -119,8 +119,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
                           <Link
                             href={`/kategori/${child.slug}`}
                             className={`block px-3 py-1.5 rounded-lg text-xs transition-colors ${child.id === category.id
-                                ? "text-orange-600 font-semibold"
-                                : "text-gray-500 hover:text-gray-900"
+                              ? "text-orange-600 font-semibold"
+                              : "text-gray-500 hover:text-gray-900"
                               }`}
                           >
                             {child.name}

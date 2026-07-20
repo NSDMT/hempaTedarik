@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
 import AddToCartButton from "@/components/products/AddToCartButton";
+import ProductImageGallery from "@/components/products/ProductImageGallery";
 import { formatPrice } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 
@@ -31,7 +32,6 @@ export default async function ProductDetailPage({ params }: Props) {
   const images: string[] = (() => {
     try { return JSON.parse(product.images); } catch { return []; }
   })();
-  const mainImage = images[0] || "/placeholder-product.jpg";
 
   const discountPercent =
     product.comparePrice && product.comparePrice > product.price
@@ -62,29 +62,11 @@ export default async function ProductDetailPage({ params }: Props) {
       {/* Product Detail */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
         {/* Images */}
-        <div className="space-y-4">
-          <div className="relative bg-gray-50 rounded-2xl overflow-hidden aspect-square border">
-            <img
-              src={mainImage}
-              alt={product.name}
-              className="w-full h-full object-contain p-8"
-            />
-            {discountPercent && (
-              <div className="absolute top-4 left-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-full">
-                -%{discountPercent}
-              </div>
-            )}
-          </div>
-          {images.length > 1 && (
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {images.map((img, i) => (
-                <div key={i} className="w-20 h-20 flex-shrink-0 border-2 rounded-lg overflow-hidden cursor-pointer hover:border-orange-400 transition-colors">
-                  <img src={img} alt={`${product.name} ${i + 1}`} className="w-full h-full object-contain p-1" />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ProductImageGallery
+          images={images}
+          productName={product.name}
+          discountPercent={discountPercent}
+        />
 
         {/* Info */}
         <div className="flex flex-col">
@@ -135,7 +117,7 @@ export default async function ProductDetailPage({ params }: Props) {
             productId={product.id}
             name={product.name}
             price={product.price}
-            image={mainImage}
+            image={images[0] || "/placeholder-product.jpg"}
             stock={product.stock}
             slug={product.slug}
           />
