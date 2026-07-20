@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { Suspense } from "react";
 import prisma from "@/lib/prisma";
 import ProductCard from "@/components/products/ProductCard";
+import SortSelect from "@/components/ui/SortSelect";
 import { formatPrice } from "@/lib/utils";
 
 interface Props {
@@ -160,17 +162,9 @@ export default async function CategoryPage({ params, searchParams }: Props) {
               <h1 className="text-2xl font-bold text-gray-900">{category.name}</h1>
               <p className="text-sm text-gray-500 mt-1">{total} ürün bulundu</p>
             </div>
-            <form method="GET" className="flex items-center gap-2">
-              <select
-                name="siralama"
-                defaultValue={sortKey}
-                className="border rounded-lg px-3 py-2 text-sm text-gray-700 bg-white focus:outline-none focus:border-orange-400"
-              >
-                {sortOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-              </select>
-            </form>
+            <Suspense fallback={null}>
+              <SortSelect value={sortKey} options={sortOptions} />
+            </Suspense>
           </div>
 
           {/* Product Grid */}

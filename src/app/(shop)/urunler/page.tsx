@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import ProductCard from "@/components/products/ProductCard";
+import SortSelect from "@/components/ui/SortSelect";
 import { Search } from "lucide-react";
 import prisma from "@/lib/prisma";
 
@@ -98,21 +99,10 @@ async function ProductsContent({
             <p className="text-sm text-gray-500 mt-1">{total} ürün bulundu</p>
           </div>
           <div className="flex items-center gap-3">
-            <form method="GET" className="flex items-center gap-2">
-              {query && <input type="hidden" name="q" value={query} />}
-              {selectedCategorySlug && <input type="hidden" name="kategori" value={selectedCategorySlug} />}
-              <select
-                name="siralama"
-                defaultValue={sort}
-                className="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:border-orange-400"
-              >
-                {sortOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
-                ))}
-              </select>
-              <button type="submit" className="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white hover:bg-gray-50">Sırala</button>
-            </form>
-          </div>
+              <Suspense fallback={null}>
+                <SortSelect value={sort} options={sortOptions} />
+              </Suspense>
+            </div>
         </div>
 
         <div className="flex gap-6">

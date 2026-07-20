@@ -10,10 +10,19 @@ export async function GET(request: NextRequest) {
     const q = searchParams.get("q");
     const categorySlug = searchParams.get("kategori");
     const featured = searchParams.get("featured");
+    const all = searchParams.get("all"); // admin: tüm ürünleri getir
     const limit = parseInt(searchParams.get("limit") || "20");
     const page = parseInt(searchParams.get("page") || "1");
 
-    const where: Record<string, unknown> = { isActive: true };
+    // "all=true" sadece admin için
+    let showAll = false;
+    if (all === "true") {
+      const session = await getServerSession(authOptions);
+      const role = (session?.user as { role?: string } | undefined)?.role;
+      showAll = role === "ADMIN";
+    }
+
+    const where: Record<string, unknown> = showAll ? {} : { isActive: true };
 
     if (q) {
       where.OR = [

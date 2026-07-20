@@ -58,7 +58,7 @@ export default function AdminProductsPage() {
 
   const fetchProducts = useCallback(async () => {
     try {
-      const res = await fetch(`/api/products?limit=50${search ? `&q=${search}` : ""}`);
+      const res = await fetch(`/api/products?limit=200&all=true${search ? `&q=${search}` : ""}`);
       const data = await res.json();
       setProducts(data.products || []);
     } catch (err) {
