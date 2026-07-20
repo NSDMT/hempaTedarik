@@ -108,16 +108,42 @@ export default function AdminProductsPage() {
     setIsModalOpen(true);
   };
 
-  const addImageUrl = () => {
+  const addImageUrl = async () => {
     const raw = imageUrlInput.trim();
     if (!raw) return;
+
+    // Base64 data URL ise sunucuya yükle
+    if (raw.startsWith("data:image/")) {
+      try {
+        setUploadingImg(true);
+        const arr = raw.split(",");
+        const mime = arr[0].match(/:(.*?);/)?.[1] || "image/jpeg";
+        const bstr = atob(arr[1]);
+        const u8arr = new Uint8Array(bstr.length);
+        for (let i = 0; i < bstr.length; i++) u8arr[i] = bstr.charCodeAt(i);
+        const ext = mime.split("/")[1]?.replace("jpeg", "jpg") || "jpg";
+        const file = new File([u8arr], `paste-${Date.now()}.${ext}`, { type: mime });
+
+        const formData = new FormData();
+        formData.append("file", file);
+        const res = await fetch("/api/upload", { method: "POST", body: formData });
+        if (!res.ok) { alert("Yükleme başarısız"); return; }
+        const { url } = await res.json();
+        setForm((p) => ({ ...p, images: [...p.images, url] }));
+        setImageUrlInput("");
+      } catch {
+        alert("Base64 görsel yüklenemedi.");
+      } finally {
+        setUploadingImg(false);
+      }
+      return;
+    }
 
     const normalized = raw.startsWith("http://") || raw.startsWith("https://")
       ? raw
       : `https://${raw}`;
 
     try {
-      // Basic validation before persisting
       new URL(normalized);
       setForm((p) => ({ ...p, images: [...p.images, normalized] }));
       setImageUrlInput("");
@@ -474,7 +500,7 @@ export default function AdminProductsPage() {
                     type="text"
                     value={imageUrlInput}
                     onChange={(e) => setImageUrlInput(e.target.value)}
-                    placeholder="Görsel URL'si girin (https://...)"
+                    placeholder="https://... veya data:image/... yapıştırın"
                     className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-orange-400"
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
@@ -486,11 +512,15 @@ export default function AdminProductsPage() {
                   <button
                     type="button"
                     onClick={addImageUrl}
-                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 text-gray-600 whitespace-nowrap flex items-center gap-1"
+                    disabled={uploadingImg}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 text-gray-600 whitespace-nowrap flex items-center gap-1 disabled:opacity-60"
                   >
-                    <ImageIcon size={14} /> URL Ekle
+                    <ImageIcon size={14} /> {uploadingImg ? "Yükleniyor..." : "URL Ekle"}
                   </button>
                 </div>
+                <p className="text-xs text-gray-400 mb-2">
+                  💡 Google Görseller&apos;den kopyaladığınız base64 görsel otomatik sunucuya yüklenir.
+                </p>
 
                 {/* Dosya yükleme */}
                 <div>

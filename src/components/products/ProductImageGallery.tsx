@@ -37,11 +37,10 @@ export default function ProductImageGallery({
               key={i}
               type="button"
               onClick={() => setSelected(i)}
-              className={`w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden transition-all ${
-                i === selected
+              className={`w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden transition-all ${i === selected
                   ? "border-2 border-orange-500 shadow-md"
                   : "border-2 border-gray-200 hover:border-orange-300"
-              }`}
+                }`}
             >
               <img
                 src={img}
