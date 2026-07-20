@@ -171,10 +171,16 @@ export default async function AdminDashboard() {
             </div>
           ) : (
             <div className="space-y-3">
-              {stats.lowStockProducts.map((product) => (
+              {stats.lowStockProducts.map((product) => {
+                const imgs: string[] = (() => { try { return JSON.parse(product.images); } catch { return []; } })();
+                return (
                 <div key={product.id} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
-                  <div className="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center text-lg flex-shrink-0">
-                    📦
+                  <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden border border-gray-100">
+                    {imgs[0] ? (
+                      <img src={imgs[0]} alt={product.name} className="w-full h-full object-contain p-0.5" />
+                    ) : (
+                      <span className="text-lg">📦</span>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-800 truncate">{product.name}</p>
@@ -189,7 +195,8 @@ export default async function AdminDashboard() {
                     {product.stock === 0 ? "Tükendi" : `${product.stock} adet`}
                   </span>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
